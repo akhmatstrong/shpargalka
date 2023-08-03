@@ -306,16 +306,17 @@ graph LR;
 Если файл уже однажды попадал в историю (с помощью коммита) и был изменён, после выполнения git add он будет записан уже так: modified: fileA.txt.
 
 4.	Файл добавлен в staging area, но после этого изменён
-# изменили fileA.txt
-*$ git status*
-*On branch master*
-*Changes to be committed:*
-  *(use "git restore --staged <file>..." to unstage)*
-          *modified:   fileA.txt*
+изменили fileA.txt
+*$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)*
+          modified:   fileA.txt
 
-*Changes not staged for commit:*
-  *(use "git add <file>..." to update what will be committed)*
-  *(use "git restore <file>..." to discard changes in working directory)*
-          *modified:   fileA.txt*
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+          modified:   fileA.txt*
+
 Файл попал и в staged (Changes to be committed), и в modified (Changes not staged for commit). В staging area находится версия файла с одним восклицательным знаком, а в Changes not staged for commit — уже изменённая версия, с тремя.
 Чтобы закоммитить самую свежую версию файла, нужно снова выполнить git add перед коммитом.
