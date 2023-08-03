@@ -396,3 +396,62 @@ $ git commit --amend --no-edit
 #### Случилось страшное: открылся редактор
 Кстати реально страшно было: никак не закрывается, мигает, трэш…
 Если забыть указать у команды *git commit --amend* один из флагов (*--no-edit* или *-m*), Git предложит отредактировать сообщение коммита вручную. Для этого он откроет текстовый редактор, который установлен в системе по умолчанию. Чаще всего это либо GNU nano, либо Vim.
+
+---
+
+### Как откатиться назад, если «всё сломалось»
+ На разных этапах работы с Git могут происходить похожие ситуации:
+* В список на коммит попал лишний файл (например, временный). Нужно «вынуть» его из списка.
+* Последние несколько коммитов ошибочные: например, сделали не то, что было нужно, или нарушили логику. Хочется «откатить» сразу несколько коммитов, вернуть «как было вчера».
+* Случайно изменился файл, который вообще не должен был меняться. Например, вы открыли не тот файл в редакторе и начали его исправлять.
+Выполнить unstage изменений — **git restore --staged <file>**
+Допустим, вы создали или изменили какой-то файл и добавили его в список «на коммит» (staging area) с помощью git add, но потом передумали включать его туда. Убрать файл из staging поможет команда **git restore --staged <file>** (от англ. restore — «восстановить»).
+В терминале это будет выглядеть примерно так.
+```
+$ touch example.txt # создали ненужный файл
+$ git add example.txt # добавили его в staged
+
+$ git status # проверили статус
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   example.txt
+
+$ git restore --staged example.txt
+$ git status # проверили статус
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        example.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+# файл example.txt из staged вернулся обратно в untracked
+```
+Чтобы «сбросить» все файлы из staged обратно в untracked/modified, можно воспользоваться командой **git restore --staged .**: она сбросит всю текущую папку (.).
+
+«Откатить» коммит — **git reset --hard <commit hash>**
+```
+$ git log --oneline # хеш можно найти в истории
+7b972f5 (HEAD -> master) style: добавить комментарии, расставить отступы
+b576d89 feat: добавить массив Expenses и цикл для добавления трат # вот сюда и вернёмся
+4b58962 refactor: разделить analyzeExpenses() на countSum() и saveExpenses()
+
+$ git reset --hard b576d89
+# теперь мы на этом коммите
+HEAD is now at b576d89 feat: добавить массив Expenses и цикл для добавления трат
+```
+
+«Откатить» изменения, которые не попали ни в staging, ни в коммит, — **git restore <file>**
+```
+# случайно изменили файл example.txt
+$ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+          modified:   example.txt
+
+$ git restore example.txt
+$ git status
+On branch main
+nothing to commit, working tree clean
+```
