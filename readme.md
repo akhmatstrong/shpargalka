@@ -241,3 +241,81 @@ graph LR;
 
 %% стрелка без текста для примера: 
   A --> B;
+```mermaid
+  graph LR;
+  untracked -- "git add" --> staged;
+  staged    -- "???"     --> tracked/comitted;
+
+%% стрелка без текста для примера: 
+  A --> B;
+```
+
+---
+
+### Какие состояния показывает git status
+Большинство файлов в типичном проекте будут находиться в состоянии tracked (то есть закоммичены и не изменены после коммита). Вы не увидите это состояние в выводе команды git status — иначе она бы каждый раз выводила список вообще всех файлов проекта.
+В итоге git status показывает только следующие состояния файлов:
+* staged (Changes to be committed в выводе git status);
+* modified (Changes not staged for commit);
+* untracked (Untracked files).
+
+##### Типичные варианты вывода git status
+1. Нет ни staged-, ни modified-, ни untracked-файлов.
+*$ git status*
+*On branch master*
+*nothing to commit, working tree clean*
+
+2. Найдены неотслеживаемые файлы.
+*$ touch fileA.txt8
+*$ git status*
+*On branch master*
+*Untracked files: найдены неотслеживаемые файлы*
+  *(use "git add <file>..." to include in what will be committed)*
+        *fileA.txt*
+
+*nothing added to commit but untracked files present (use "git add" to track)*
+Файл fileA.txt отображается в секции неотслеживаемых файлов — Untracked files. Это значит, что он не был добавлен в репозиторий через git add.
+Теперь fileA.txt находится в секции Changes to be committed (англ. «изменения, которые попадут в коммит»). Если сейчас выполнить коммит, то в репозитории будет зафиксирована текущая версия этого файла. Закоммитьте его.
+*$ git commit -m 'Добавить файл fileA.txt'*
+
+тут будет вывод комманды commit, он нас не интересует
+*$ git status*
+*On branch master*
+*nothing to commit, working tree clean*
+
+3.	Найдены изменения, которые не войдут в коммит
+внесли в fileA.txt правки
+запросили статус
+*$ git status*
+*On branch master*
+8Changes not staged for commit: ещё одна секция*
+  *(use "git add <file>..." to update what will be committed)*
+  *(use "git restore <file>..." to discard changes in working directory)*
+        *modified:   fileA.txt*
+
+Файл fileA.txt был изменён, но ещё не добавлен в staging area после этого. Так он оказался в секции Changes not staged for commit (англ. «изменения, которые не подготовлены к коммиту»). Эта секция соответствует статусу modified.
+*$ git add fileA.txt*
+*$ git status*
+*On branch master*
+*Changes to be committed: # все изменения готовы к коммиту*
+  *(use "git restore --staged <file>..." to unstage)*
+        *modified:   fileA.txt*
+
+Обратите внимание: хотя вывод команды git status очень похож на тот, который был после первого добавления файла fileA.txt, они всё же отличаются.
+Когда совсем новый файл попадает в staging area, перед его названием указывается new file. Вот так: new file: fileA.txt.
+Если файл уже однажды попадал в историю (с помощью коммита) и был изменён, после выполнения git add он будет записан уже так: modified: fileA.txt.
+
+4.	Файл добавлен в staging area, но после этого изменён
+# изменили fileA.txt
+*$ git status*
+*On branch master*
+*Changes to be committed:*
+  *(use "git restore --staged <file>..." to unstage)*
+          *modified:   fileA.txt*
+
+*Changes not staged for commit:*
+  *(use "git add <file>..." to update what will be committed)*
+  *(use "git restore <file>..." to discard changes in working directory)*
+          *modified:   fileA.txt*
+Файл попал и в staged (Changes to be committed), и в modified (Changes not staged for commit). В staging area находится версия файла с одним восклицательным знаком, а в Changes not staged for commit — уже изменённая версия, с тремя.
+Чтобы закоммитить самую свежую версию файла, нужно снова выполнить git add перед коммитом.
