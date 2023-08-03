@@ -230,3 +230,14 @@ flowchart TD
     C -->|изменения| D
     D -->|изменения| B
 ```
+
+---
+
+Пример обычного графа(`mermaid не забыть)
+
+graph LR;
+  untracked -- "git add" --> staged;
+  staged    -- "???"     --> tracked/comitted;
+
+%% стрелка без текста для примера: 
+  A --> B;
