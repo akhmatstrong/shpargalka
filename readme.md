@@ -9,8 +9,25 @@
 
 ### Работа с файлами и папками
 * *touch index.html* (англ. touch, "коснуться") -- создать файл *index.html* в текущей папке
+```
+$ touch my-new-file.txt #создали файл my-new-file.txt
+```
 * *touch index.html style.css script.js* -- если нужно создать сразу несколько файлов, можно напечатать их имена в одну строку через пробел
-* *mkdir second-project* (от англ. make directory, "создать директорию") -- создай папку с именем *second-project* в текущей папке 
+* *mkdir second-project* (от англ. make directory, "создать директорию") -- создай папку с именем *second-project* в текущей папке
+```
+$ mkdir new-dir #создали директорию new-dir
+```
+```
+$ mkdir -p dir1/dir-inside/dir-deeper-inside #создали папку dir-deeper-inside в папке dir-inside, которая находится в папке dir1
+#Также можно использовать обе команды вместе с символом домашней директории (~) или родительской директории (..).
+```
+* *cp* (копировать файл)
+```
+$ cp что_копируем куда_копируем
+```
+```
+$ cp index.html src/ #скопировали index.html в папку src
+```
 
 ### Копирование и перемещение 
 * *p file.txt ~/my-dir* (от англ. copy, "копировать") -- скопируй файл в другое место
@@ -18,9 +35,14 @@
 
 ### Чтение
 * *cat file.txt* (от англ. concatenate and print, "объединить и распечатать") -- распечатай содержимое файла *file.txt*
+Команда напечатает, что содержится в открываемом файле
+Команда cat работает только с текстовыми файлами. Вывести этой командой файл другого типа (например, изображение) не получится.
 
 ### Удаление
 * *rm about.html* (от англ. remove, "удалить") -- удали файл *about.html*
+```
+$ rm example.txt удалили файл example.txt из текущей папки
+```
 * *rmdir images* (от англ. remove directory, "удали директорию") -- удали папку *images*
 * *rm -r second-project* (от англ. remove, "удалить" + recursive, "рекурсивный") -- удали папку *second-project* и все, что она содержит
 
@@ -32,65 +54,41 @@
 
 ---
 
-Команды:
-Pwd (print working directory)
-Cd~ (вернуться к home directory)
-Ls (list directory content) показать содержимое активной директории
-ls -a (расширеный список файлов скрытые и т д)
-touch (создать файл, touch ИМЯ_ФАЙЛА)
-
-$ touch my-new-file.txt создали файл my-new-file.txt
-
-Mkdir (создать директорию)
-
-$ mkdir new-dir создали директорию new-dir
-$ mkdir -p dir1/dir-inside/dir-deeper-inside
-создали папку dir-deeper-inside в папке dir-inside, которая находится в папке dir1
-Также можно использовать обе команды вместе с символом домашней директории (~) или родительской директории (..).
-
-cp (копировать файл)
-
-$ cp что_копируем куда_копируем
-
-$ cp index.html src/
-скопировали index.html в папку src
-Mv (переместить файл\папку) 
-
-Cat (concatenate and print – объединить и распечатать)
-Команда напечатает, что содержится в открываемом файле
-Команда cat работает только с текстовыми файлами. Вывести этой командой файл другого типа (например, изображение) не получится.
-
-Чтобы удалить файл, нужно напечатать команду rm (от англ. remove — «удалить») и передать ей имя файла.
-$ rm example.txt удалили файл example.txt из текущей папки
-Удалить папку можно командой rmdir (от англ. remove directory — «удалить директорию»). Не забудьте указать имя папки.
-$ rmdir images команда удалит папку images из текущей директории, 
-               если папка images пуста
-$ rm -r images удалили папку images со всем её содержимым из текущей директории
+```
+$ rmdir images #команда удалит папку images из текущей директории, 
+               #если папка images пуста
+$ rm -r images #удалили папку images со всем её содержимым из текущей директории
+```
 В этом случае команда rm -r (-r — от англ. recursive, «рекурсивный») рекурсивно удаляет файлы и папки. Это значит, что удаление будет последовательно применяться к каждому из элементов в этой папке — пока не сотрёт их все. Затем команда удалит пустую директорию.
 
 Команды в терминале необязательно вбивать и выполнять по очереди. Их можно указывать не по одной, а сразу списком. Для этого их нужно разделить двумя амперсандами (&&).
 
 ---
 
-*git config –global (изменение инфо файла с именем почтой)*
-
-$ git config --global user.name "User Namovich" 
+```
+git config –global #(изменение инфо файла с именем почтой)
+```
+```
+$ git config --global user.name "User Namovich"
+```
 имя или ник нужно написать латиницей и в кавычках
-
+```
 $ git config --global user.email username@yandex.ru
+```
 здесь нужно указать свой настоящий email
+```
 $ git config –list
-
+```
 *Сделать папку репозиторием — git init*
-
-$ cd ~/dev/first-project перешли в нужную папку
-$ git init создали репозиторий
-
-«Разгитить» папку, если что-то пошло не так, — rm -rf .git
+```
+$ cd ~/dev/first-project #перешли в нужную папку
+$ git init #создали репозиторий
+```
+«Разгитить» папку, если что-то пошло не так, *— rm -rf .git*
 
 *Проверить состояние репозитория — git status*
 
-Команда git status выведет:
+#### Команда git status выведет:
 * название текущей ветки: On branch master или On branch main;
 * сообщение о том, что в репозитории ещё нет коммитов: No commits yet;
 * сообщение, которое говорит: «чтобы что-нибудь закоммитить (то есть зафиксировать), нужно сначала это создать» — nothing to commit (create/copy files and use "git add" to track).
@@ -98,16 +96,20 @@ $ git init создали репозиторий
 *Подготовить файлы к сохранению — git add*
 
 Для отслеживания состояния всех файлов: 
-$ git add --all (от англ. add — «добавить» + от англ. all — «всё»). Ключ, или флаг, --all позволяет подготовить к сохранению все файлы в репозитории.
-$ git add --all подготовили к сохранению все файлы в репозитории
-$ git status проверили статус
+```
+$ git add --all #(от англ. add — «добавить» + от англ. all — «всё»). Ключ, или флаг, --all позволяет подготовить к сохранению все файлы в репозитории.
+$ git add --all #подготовили к сохранению все файлы в репозитории
+$ git status #проверили статус
 $ git add todo.txt
 $ git add readme.txt
 $ git status
+```
 Также можно добавить текущую папку целиком — в этом случае все файлы в ней тоже будут добавлены. Обратиться к текущей папке в Bash позволяет точка (.).
 
-$ git add . добавить всю текущую папку
+```
+$ git add . #добавить всю текущую папку
 $ git status 
+```
 
 *«Сделать коммит» значит сохранить текущую версию файла.*
 
@@ -117,37 +119,44 @@ $ git status
 
 *Просмотреть историю коммитов — git log*
 
-$ ls -la .ssh/ вывели список созданных ключей
+```
+$ ls -la .ssh/ #вывели список созданных ключей
 $ ssh-keygen -t ed25519 -C "электронная почта, к которой привязан ваш аккаунт на GitHub"
 $ ssh-keygen -t rsa -b 4096 -C "электронная почта, к которой привязан ваш аккаунт на GitHub"
 ls -a ~/.ssh
+```
 
 ---
 
 скопировать содержимое ключа в буфер обмена:
+```
 $ clip < ~/.ssh/id_rsa.pub
 для ed25519:
 $ clip < ~/.ssh/id_ed25519.pub
+```
 
 ---
 
 *Создать репозиторий на github.com с полностью таким же названием, как и у локального репозитория*
 
-Привязать удалённый репозиторий к локальному — git remote add
+*Привязать удалённый репозиторий к локальному — git remote add*
+```
 $ git remote add origin git@github.com:%ИМЯ_АККАУНТА%/first-project.git
+```
 origin (англ. «источник») — стандартный псевдоним, с помощью которого можно обращаться к главному удалённому репозиторию (обычно такой репозиторий один). Это значительно упрощает работу.
 
 *Убедиться, что репозитории связаны, — git remote -v*
 
 *Отправить изменения на удалённый репозиторий — git push*
 
-$ git push -u origin main Если команда приведёт к ошибке, попробуйте 
-                          заменить main на master.
+```
+$ git push -u origin main #Если команда приведёт к ошибке, попробуйте заменить main на master.
+```
 В дальнейшем при работе с удалённым репозиторием флаг -u можно опустить и писать просто git push.
 
 ---
 
-Как создать и оформить README.md
+## Как создать и оформить README.md
 
 README.md — текстовый файл, который можно создать командой touch, а затем редактировать так же, как и любой другой текстовый документ. Например, в блокноте.
 Маркда́ун — это специальный язык разметки. Он позволяет красиво отформатировать текстовый документ.
@@ -261,46 +270,54 @@ graph LR;
 
 ##### Типичные варианты вывода git status
 1. Нет ни staged-, ни modified-, ни untracked-файлов.
-*$ git status*
-*On branch master*
-*nothing to commit, working tree clean*
-
+```
+$ git status
+On branch master
+nothing to commit, working tree clean
+```
 2. Найдены неотслеживаемые файлы.
-*$ touch fileA.txt8
-*$ git status*
-*On branch master*
-*Untracked files: найдены неотслеживаемые файлы*
-  *(use "git add <file>..." to include in what will be committed)*
-        *fileA.txt*
+```
+$ touch fileA.txt
+$ git status
+On branch master
+Untracked files: #найдены неотслеживаемые файлы
+  (use "git add <file>..." to include in what will be committed)
+        fileA.txt
 
-*nothing added to commit but untracked files present (use "git add" to track)*
+nothing added to commit but untracked files present (use "git add" to track)
+```
 Файл fileA.txt отображается в секции неотслеживаемых файлов — Untracked files. Это значит, что он не был добавлен в репозиторий через git add.
 Теперь fileA.txt находится в секции Changes to be committed (англ. «изменения, которые попадут в коммит»). Если сейчас выполнить коммит, то в репозитории будет зафиксирована текущая версия этого файла. Закоммитьте его.
-*$ git commit -m 'Добавить файл fileA.txt'*
+```
+$ git commit -m 'Добавить файл fileA.txt'
+```
 
 тут будет вывод комманды commit, он нас не интересует
-*$ git status*
-*On branch master*
-*nothing to commit, working tree clean*
-
+```
+$ git status
+On branch master
+nothing to commit, working tree clean
+```
 3.	Найдены изменения, которые не войдут в коммит
 внесли в fileA.txt правки
 запросили статус
-*$ git status*
-*On branch master*
-8Changes not staged for commit: ещё одна секция*
-  *(use "git add <file>..." to update what will be committed)*
-  *(use "git restore <file>..." to discard changes in working directory)*
-        *modified:   fileA.txt*
-
+```
+$ git status
+On branch master
+8Changes not staged for commit: #ещё одна секция
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   fileA.txt
+```
 Файл fileA.txt был изменён, но ещё не добавлен в staging area после этого. Так он оказался в секции Changes not staged for commit (англ. «изменения, которые не подготовлены к коммиту»). Эта секция соответствует статусу modified.
-*$ git add fileA.txt*
-*$ git status*
-*On branch master*
-*Changes to be committed: # все изменения готовы к коммиту*
-  *(use "git restore --staged <file>..." to unstage)*
-        *modified:   fileA.txt*
-
+```
+$ git add fileA.txt
+$ git status
+On branch master
+Changes to be committed: #все изменения готовы к коммиту
+  (use "git restore --staged <file>..." to unstage)
+        modified:   fileA.txt
+```
 Обратите внимание: хотя вывод команды git status очень похож на тот, который был после первого добавления файла fileA.txt, они всё же отличаются.
 Когда совсем новый файл попадает в staging area, перед его названием указывается new file. Вот так: new file: fileA.txt.
 Если файл уже однажды попадал в историю (с помощью коммита) и был изменён, после выполнения git add он будет записан уже так: modified: fileA.txt.
