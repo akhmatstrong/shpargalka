@@ -843,3 +843,66 @@ $ git checkout my-branch # вернулись в рабочую ветку my-br
 $ git merge main # влили main в новую ветку my-branch
 $ git push -u origin my-branch # отправили ветку my-branch в удалённый репозиторий
 ```
+
+---
+
+## Fast-forward
+Можно ли отключить fast-forward
+Fast-forward слияние веток можно отключить флагом **--no-ff**. Например: **git merge --no-ff add-docs**. Также его можно отключить «навсегда» (до тех пор, пока вы не вернёте настройку «как было») с помощью настройки merge.ff: **git config [--global] merge.ff false**.
+Если отключить слияние в режиме fast-forward, вместо «перемотки» ветки Git создаст в ней коммит слияния (англ. **merge commit**) — в обиходе его называют *merge-коммит* или *мёрж-коммит*. В этом случае результат «вливания» ветки add-docs в main выглядел бы так.
+```
+# находимся в ветке main
+# --no-edit отключает ввод сообщения для merge-коммита
+# --no-ff отключает fast-forward слияние веток
+$ git merge --no-edit --no-ff add-docs
+Merge made by the 'ort' strategy.
+ docs.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 docs.txt
+```
+```
+# с флагом --graph
+# Git нарисует ветки с помощью «палочек» и «звёздочек»
+# получившийся коммит слияния: 6814789
+$ git log --graph --oneline
+*   6814789 (HEAD -> main) Merge branch 'add-docs'
+|\
+| * e08fa2a (add-docs) New docs 2
+| * fd588b2 New docs 1
+|/
+* 997d9ce Commit 4
+* 0313e8e Commit 3
+* 5848aba Commit 2
+* 04923d7 Commit 1
+```
+#### Зачем отключать fast-forward?
+Многие проекты отключают *fast-forward* слияние веток, потому что при нём теряется часть информации. Результат выглядит так, как будто в *main* «просто появились» новые коммиты. Если не знать о ветке *add-docs*, то можно подумать, что такой ветки и не было.
+Полноценный коммит слияния сохраняет всю информацию: в нём будет указано, какая именно ветка вливалась в main.
+
+## Non-fast-forward
+При слиянии не-fast-forward веток Git создаёт коммит слияния.
+```
+# находимся в ветке main
+# --no-edit избавляет от необходимости
+# вводить сообщение для merge-коммита
+$ git merge --no-edit add-docs
+Merge made by the 'ort' strategy.
+ docs.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 docs.txt
+```
+```
+# коммит слияния: 34f5f8f
+$ git log --graph --oneline
+*   34f5f8f (HEAD -> main) Merge branch 'add-docs'
+|\
+| * 8de42eb (add-docs) New docs 2
+| * 4d3c346 New docs 1
+* | 15d3f04 Commit 5
+|/
+* 73def1e Commit 4
+* 9c30ab3 Commit 3
+* 83cc5ec Commit 2
+* 8e87fb2 Commit 1
+```
+* Чаще всего сообщения к коммитам слияния не редактируют и оставляют «как предложил Git». Для таких случаев удобен флаг --no-edit: **git merge --no-edit %another_branch%**.
