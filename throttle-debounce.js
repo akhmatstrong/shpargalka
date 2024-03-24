@@ -1,4 +1,3 @@
-```
 {
     window.addEventListener(
         "resize",
@@ -55,4 +54,3 @@
         };
     }
 }
-```

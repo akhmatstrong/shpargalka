@@ -1,4 +1,3 @@
-```
 // сумма элементов массива
 {
     let array = [1, 2, 3, 4, 5];
@@ -228,5 +227,3 @@
     const notFalsy = array.filter((n) => Boolean(n));
     console.log(notFalsy);
 }
-
-```
